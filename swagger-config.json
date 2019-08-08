@@ -1,0 +1,14 @@
+{
+    "modelPackage": "cropcert.client.model",
+    "apiPackage": "cropcert.client.api",
+    "invokerPackage": "cropcert.client",
+    "groupId": "cropcert",
+    "artifactId": "client-api",
+    "artifactVersion": "1.0.0",
+    "fullJavaUtil": true,
+    "dateLibrary": "java8",
+    "library": "jersey1",
+    "developerName": "Vilay Kandi",
+    "developerEmail": "vilayk@strandls.com",
+    "java8": true
+} 

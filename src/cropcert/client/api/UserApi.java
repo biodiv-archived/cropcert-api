@@ -17,7 +17,7 @@ import io.swagger.annotations.Api;
  * @author vilay
  *
  */
-@Path("api/user")
+@Path("user")
 @Api("User")
 public class UserApi {
 	

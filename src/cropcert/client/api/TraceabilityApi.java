@@ -24,7 +24,7 @@ import cropcert.traceability.api.LotCreationApi;
 import cropcert.user.api.CollectionCenterApi;
 import io.swagger.annotations.Api;
 
-@Path("api/traceability")
+@Path("traceability")
 @Api("Traceability")
 public class TraceabilityApi {
 	
