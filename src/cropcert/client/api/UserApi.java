@@ -11,6 +11,7 @@ import org.pac4j.core.profile.CommonProfile;
 
 import cropcert.client.util.AuthUtility;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * User end point for composite queries of the user end point.
@@ -24,6 +25,9 @@ public class UserApi {
 	@Path("me")
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@ApiOperation(
+			value = "Get details of the current user",
+			response = CommonProfile.class)
 	public CommonProfile getActor(@Context HttpServletRequest request) {
 		return AuthUtility.getCurrentUser(request);
 	}

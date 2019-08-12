@@ -36,9 +36,14 @@
 	<distributionManagement>
 		<repository>
 			<id>central</id>
-			<name>darbhanga-releases</name>
-			<url>http://localhost:8081/artifactory/libs-release</url>
+			<name>chitravathi-releases</name>
+			<url>http://localhost:8081/artifactory/libs-release-local</url>
 		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>chitravathi-snapshots</name>
+			<url>http://localhost:8081/artifactory/libs-snapshot-local</url>
+		</snapshotRepository>
 	</distributionManagement>
 
 	<repositories>
@@ -158,13 +163,13 @@
 
 		<dependency>
 			<groupId>cropcert</groupId>
-			<artifactId>user</artifactId>
-			<version>1.0.0</version>
+			<artifactId>user-client</artifactId>
+			<version>0.0.1-20190812.115949-1</version>
 		</dependency>
 		<dependency>
 			<groupId>cropcert</groupId>
-			<artifactId>traceability</artifactId>
-			<version>1.0.0</version>
+			<artifactId>traceability-client</artifactId>
+			<version>0.0.1-20190812.120203-1</version>
 		</dependency>
 
 	</dependencies>
@@ -250,21 +255,28 @@
 			</plugin>
 
 			<plugin>
-				<groupId>io.openapitools.swagger</groupId>
+				<groupId>com.github.kongchen</groupId>
 				<artifactId>swagger-maven-plugin</artifactId>
-				<version>${swagger-maven-plugin.version}</version>
+				<version>3.1.1</version>
 				<configuration>
-					<resourcePackages>
-						<resourcePackage>cropcert</resourcePackage>
-					</resourcePackages>
-					<useResourcePackagesChildren>true</useResourcePackagesChildren>
-					<outputDirectory>${basedir}/target/</outputDirectory>
-					<outputFormats>
-						<outputFormat>JSON</outputFormat>
-						<outputFormat>YAML</outputFormat>
-					</outputFormats>
-					<prettyPrint>TRUE</prettyPrint>
-					<attachSwaggerArtifact>TRUE</attachSwaggerArtifact>
+					<apiSources>
+						<apiSource>
+							<springmvc>false</springmvc>
+							<locations>
+								cropcert
+							</locations>
+							<schemes>http,https</schemes>
+							<host>localhost:8080</host>
+							<basePath>/${warName}/api</basePath>
+							<info>
+								<title>Swagger file generation</title>
+								<version>v1</version>
+							</info>
+							<outputPath>${project.basedir}/target</outputPath>
+							<outputFormats>json</outputFormats>
+							<swaggerDirectory>${project.basedir}/target</swaggerDirectory>
+						</apiSource>
+					</apiSources>
 				</configuration>
 				<executions>
 					<execution>
@@ -292,9 +304,7 @@
 					<executable>java</executable>
 					<mainClass>org.openapitools.codegen.OpenAPIGenerator</mainClass>
 					<commandlineArgs>
-						generate -i ${project.basedir}/target/swagger.json
-						-g java -o target/${warName}-jar --skip-validate-spec
-						-cswagger-config.json
+						generate -i ${project.basedir}/target/swagger.json -g java -o target/${warName}-jar --skip-validate-spec -c swagger-config.json
 					</commandlineArgs>
 					<includeProjectDependencies>true</includeProjectDependencies>
 					<includePluginDependencies>true</includePluginDependencies>
