@@ -11,6 +11,8 @@ import org.pac4j.core.profile.CommonProfile;
 
 import cropcert.client.util.AuthUtility;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 /**
@@ -20,6 +22,9 @@ import io.swagger.annotations.ApiOperation;
  */
 @Path("user")
 @Api("User")
+@ApiImplicitParams({
+    @ApiImplicitParam(name = "Authorization", value = "Authorization token", 
+                      required = true, dataType = "string", paramType = "header") })
 public class UserApi {
 	
 	@Path("me")

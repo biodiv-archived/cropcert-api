@@ -171,6 +171,11 @@
 			<artifactId>traceability-client</artifactId>
 			<version>0.0.1-20190812.120203-1</version>
 		</dependency>
+		<dependency>
+			<groupId>cropcert</groupId>
+			<artifactId>pages-client</artifactId>
+			<version>0.0.1-20190813.105954-1</version>
+		</dependency>
 
 	</dependencies>
 

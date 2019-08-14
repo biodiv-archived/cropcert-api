@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 import javax.servlet.Filter;
@@ -29,7 +27,7 @@ import cropcert.client.Constants;
 public class JWTTokenValidationFilter implements Filter {
 
 	private static JwtAuthenticator jwtAuthenticator;	
-	private static List<String> excludedUrls;
+	private static String[] excludedUrls;
 	
 	@Override
 	public void destroy() {
@@ -42,7 +40,8 @@ public class JWTTokenValidationFilter implements Filter {
 		
 		String path = ((HttpServletRequest) request).getServletPath();
 		
-		if(Stream.of(excludedUrls.toArray(new String[0]))
+		// exclude all the urls which starts with mention prefix in web.xml.
+		if(Stream.of(excludedUrls)
 				.anyMatch(path::startsWith)) {
 			chain.doFilter(request, response);
 			return;
@@ -89,7 +88,9 @@ public class JWTTokenValidationFilter implements Filter {
 		} 
 		
 		String excludePatterns = filterConfig.getInitParameter("excludedUrls");
-		excludedUrls = Arrays.asList(excludePatterns.split(","));
+		excludedUrls = excludePatterns.split(",");
+		for(int i=0;i<excludedUrls.length;i++)
+			excludedUrls[i] = excludedUrls[i].trim();
 	}
 
 

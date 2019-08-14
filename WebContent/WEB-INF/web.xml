@@ -13,7 +13,10 @@
 		<filter-class>cropcert.client.filter.JWTTokenValidationFilter</filter-class>
 		<init-param>
 			<param-name>excludedUrls</param-name>
-			<param-value>/api/swagger.json</param-value>
+			<param-value>
+			/api/swagger.json, /index.html, /swagger-ui, 
+			/user/api/, /traceabilty/api/, pages/api
+			</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -30,7 +33,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-
 	<filter>
 		<filter-name>guice</filter-name>
 		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>

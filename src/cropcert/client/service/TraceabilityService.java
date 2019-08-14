@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -26,10 +27,11 @@ public class TraceabilityService {
 	@Inject
 	private LotApi lotApi;
 
-	public Response getOrigins(Long lotId) {
+	public Response getOrigins(Long lotId, String bearerToken) {
 		if(lotId != -1 ) {
 			List<Object> ccCodes;
 			try {
+				lotCreationApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
 				ccCodes = lotCreationApi.getLotOrigins(lotId.toString());
 			} catch (ApiException e) {
 				e.printStackTrace();
@@ -43,6 +45,7 @@ public class TraceabilityService {
 			
 			Map<String, Object> result;
 			try {
+				collectionCenterApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
 				result = collectionCenterApi.getOriginNames(ccCodesString);
 				return Response.ok().entity(result).build();
 			} catch (cropcert.user.ApiException e) {
@@ -52,7 +55,7 @@ public class TraceabilityService {
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	public Response getShowPage(Long lotId) {
+	public Response getShowPage(Long lotId, String bearerToken) {
 		Map<String, Object> pageInfo = new HashMap<String, Object>();
 		try {
 			lotApi.find(lotId);

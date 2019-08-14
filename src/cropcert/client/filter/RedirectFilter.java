@@ -9,12 +9,29 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.google.inject.Inject;
+
+import cropcert.user.ApiClient;
 
 public class RedirectFilter implements Filter {
 
-	private static final String USER_API         = "/user";
-	private static final String TRACEABILITY_API = "/traceability";
-	private static final String PAGES_API        = "/pages";
+	/**
+	 * Add one variable for each microservice
+	 */
+	private static final String USER_API         = "/user/api/";
+	private static final String TRACEABILITY_API = "/traceability/api/";
+	private static final String PAGES_API        = "/pages/api/";
+	
+	@Inject
+	private ApiClient userApiClient;
+	
+	@Inject
+	private cropcert.traceability.ApiClient traceabilityApiClient;
+	
+	@Inject
+	private cropcert.pages.ApiClient pagesApiClient;
 	
 	@Override
 	public void destroy() {
@@ -25,20 +42,28 @@ public class RedirectFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		
-		String path = ((HttpServletRequest) request).getServletPath();
+		String path     = ((HttpServletRequest) request).getServletPath();
+		String basePath = "";
 		
         if (path.toLowerCase().startsWith(USER_API)) {
-            request.getRequestDispatcher(path).forward(request, response);
+        	path     = path.substring(USER_API.length()-1);
+        	basePath = userApiClient.getBasePath();
+        	((HttpServletResponse) response).sendRedirect(basePath+path);
         } 
-        if (path.toLowerCase().startsWith(TRACEABILITY_API)) {
-            request.getRequestDispatcher(path).forward(request, response);
+        else if (path.toLowerCase().startsWith(TRACEABILITY_API)) {
+        	path     = path.substring(TRACEABILITY_API.length()-1);
+        	basePath = traceabilityApiClient.getBasePath();
+        	((HttpServletResponse) response).sendRedirect(basePath+path);
         } 
-        if (path.toLowerCase().startsWith(PAGES_API)) {
-            request.getRequestDispatcher(path).forward(request, response);
+        else if (path.toLowerCase().startsWith(PAGES_API)) {
+        	path     = path.substring(PAGES_API.length()-1);
+        	basePath = pagesApiClient.getBasePath();
+        	((HttpServletResponse) response).sendRedirect(basePath+path);
         } 
         else {
             chain.doFilter(request, response);
         }
+        
 	}
 	
 	@Override
