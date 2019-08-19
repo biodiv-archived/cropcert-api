@@ -1,10 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>cropcert-api</groupId>
-	<artifactId>cropcert-api</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>cropcert</groupId>
+	<artifactId>api</artifactId>
+	<version>1.0.0-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<properties>
@@ -32,17 +30,16 @@
 		<!-- end Code -->
 	</properties>
 
-
 	<distributionManagement>
 		<repository>
 			<id>central</id>
-			<name>chitravathi-releases</name>
-			<url>http://localhost:8081/artifactory/libs-release-local</url>
+			<name>jfrog-releases</name>
+			<url>http://venus.strandls.com/artifactory/libs-release-local</url>
 		</repository>
 		<snapshotRepository>
 			<id>snapshots</id>
-			<name>chitravathi-snapshots</name>
-			<url>http://localhost:8081/artifactory/libs-snapshot-local</url>
+			<name>jfrog-snapshots</name>
+			<url>http://venus.strandls.com/artifactory/libs-snapshot-local</url>
 		</snapshotRepository>
 	</distributionManagement>
 
@@ -53,13 +50,13 @@
 			</snapshots>
 			<id>central</id>
 			<name>libs-release</name>
-			<url>http://localhost:8081/artifactory/libs-release</url>
+			<url>http://venus.strandls.com/artifactory/libs-release</url>
 		</repository>
 		<repository>
 			<snapshots />
 			<id>snapshots</id>
 			<name>libs-snapshot</name>
-			<url>http://localhost:8081/artifactory/libs-snapshot</url>
+			<url>http://venus.strandls.com/artifactory/libs-snapshot</url>
 		</repository>
 	</repositories>
 
@@ -164,17 +161,17 @@
 		<dependency>
 			<groupId>cropcert</groupId>
 			<artifactId>user-client</artifactId>
-			<version>0.0.1-20190812.115949-1</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>cropcert</groupId>
 			<artifactId>traceability-client</artifactId>
-			<version>0.0.1-20190812.120203-1</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>cropcert</groupId>
 			<artifactId>pages-client</artifactId>
-			<version>0.0.1-20190813.105954-1</version>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
