@@ -22,7 +22,7 @@ import org.pac4j.jwt.config.signature.RSASignatureConfiguration;
 import org.pac4j.jwt.config.signature.SecretSignatureConfiguration;
 import org.pac4j.jwt.credentials.authenticator.JwtAuthenticator;
 
-import cropcert.client.Constants;
+import cropcert.client.MyApplication;
 
 public class JWTTokenValidationFilter implements Filter {
 
@@ -78,7 +78,7 @@ public class JWTTokenValidationFilter implements Filter {
 	public void init(FilterConfig filterConfig) throws ServletException {
 
 		jwtAuthenticator = new JwtAuthenticator();
-		jwtAuthenticator.addSignatureConfiguration(new SecretSignatureConfiguration(Constants.JWT_SALT));
+		jwtAuthenticator.addSignatureConfiguration(new SecretSignatureConfiguration(MyApplication.JWT_SALT));
 		try {
 			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 			KeyPair rsaKeyPair = keyGen.generateKeyPair();

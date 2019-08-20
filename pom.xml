@@ -250,7 +250,7 @@
 					<replacements>
 						<replacement>
 							<token>http://petstore.swagger.io/v2/swagger.json</token>
-							<value>http://localhost:8080/${warName}/api/swagger.json</value>
+							<value>../api/swagger.json</value>
 						</replacement>
 					</replacements>
 				</configuration>
