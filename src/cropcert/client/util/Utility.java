@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiModel;
 
 public class Utility {
 
-	public static String commaSeparatedValues(List<Object> ccCodes) {
+	public static String commaSeparatedValues(List<Long> ccCodes) {
 		String result = "";
 
 		int index = 0;

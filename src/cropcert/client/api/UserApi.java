@@ -6,6 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.pac4j.core.profile.CommonProfile;
 
@@ -27,13 +28,14 @@ import io.swagger.annotations.ApiOperation;
                       required = true, dataType = "string", paramType = "header") })
 public class UserApi {
 	
-	@Path("me")
 	@GET
+	@Path("me")
 	@Produces(MediaType.APPLICATION_JSON)
 	@ApiOperation(
 			value = "Get details of the current user",
 			response = CommonProfile.class)
-	public CommonProfile getActor(@Context HttpServletRequest request) {
-		return AuthUtility.getCurrentUser(request);
+	public Response getActor(@Context HttpServletRequest request) {
+		CommonProfile profile = AuthUtility.getCurrentUser(request);
+		return Response.ok().entity(profile).build();
 	}
 }
