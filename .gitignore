@@ -16,3 +16,4 @@ out/
 /dependencies.xml
 .java-version
 .vscode
+deployOnVenus.sh
