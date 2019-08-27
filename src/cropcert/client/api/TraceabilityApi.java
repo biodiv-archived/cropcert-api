@@ -25,30 +25,26 @@ import io.swagger.annotations.ApiOperation;
 @Path("traceability")
 @Api("Traceability")
 public class TraceabilityApi {
-	
+
 	@Inject
 	TraceabilityService traceabilityService;
-	
+
 	@GET
 	@Path("origin")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(
-			value = "Get the origin by lot id",
-			response = Map.class)
-	public Response getOrigins(@Context HttpServletRequest request,
-			@DefaultValue("-1") @QueryParam("lotId") Long lotId) throws JSONException {
+	@ApiOperation(value = "Get the origin by lot id", response = Map.class)
+	public Response getOrigins(@Context HttpServletRequest request, @DefaultValue("-1") @QueryParam("lotId") Long lotId)
+			throws JSONException {
 		String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
 		return traceabilityService.getOrigins(lotId, bearerToken);
 	}
-	
+
 	@GET
 	@Path("show")
 	@Consumes(MediaType.TEXT_PLAIN)
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(
-			value = "Get the information of the show page for lot",
-			response = Map.class)
+	@ApiOperation(value = "Get the information of the show page for lot", response = Map.class)
 	public Response getShowPage(@Context HttpServletRequest request,
 			@DefaultValue("-1") @QueryParam("lotId") Long lotId) throws JSONException {
 		String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
