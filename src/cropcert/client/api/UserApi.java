@@ -18,22 +18,20 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * User end point for composite queries of the user end point.
+ * 
  * @author vilay
  *
  */
 @Path("user")
 @Api("User")
 @ApiImplicitParams({
-    @ApiImplicitParam(name = "Authorization", value = "Authorization token", 
-                      required = true, dataType = "string", paramType = "header") })
+		@ApiImplicitParam(name = "Authorization", value = "Authorization token", required = true, dataType = "string", paramType = "header") })
 public class UserApi {
-	
+
 	@GET
 	@Path("me")
 	@Produces(MediaType.APPLICATION_JSON)
-	@ApiOperation(
-			value = "Get details of the current user",
-			response = CommonProfile.class)
+	@ApiOperation(value = "Get details of the current user", response = CommonProfile.class)
 	public Response getActor(@Context HttpServletRequest request) {
 		CommonProfile profile = AuthUtility.getCurrentUser(request);
 		return Response.ok().entity(profile).build();

@@ -1,5 +1,6 @@
 package cropcert.client.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -20,6 +21,8 @@ import cropcert.traceability.api.LotCreationApi;
 import cropcert.traceability.model.Activity;
 import cropcert.traceability.model.Lot;
 import cropcert.user.api.CollectionCenterApi;
+import cropcert.user.api.UserApi;
+import cropcert.user.model.User;
 
 public class TraceabilityService {
 	
@@ -30,6 +33,8 @@ public class TraceabilityService {
 	@Inject private LotApi lotApi;
 	
 	@Inject private ActivityApi activityApi;
+	
+	@Inject private UserApi userApi;
 	
 	public Response getOrigins(Long lotId, String bearerToken) {
 		if(lotId != -1 ) {
@@ -66,11 +71,22 @@ public class TraceabilityService {
 			Lot lot = lotApi.find(lotId);
 			pageInfo.put("lot", lot);
 			List<Activity> activities = activityApi.getByLotId(lotId, -1, -1);
-			Set<String> users = new HashSet<String>();
-			for(Object object : activities) {
-				//Activity activity = objectMapper.readValue(object.toString(), Activity.class);
-				//users.add(activity.getUserId());
-				users.add(object.toString());
+			pageInfo.put("activities", activities);
+			Set<String> userIds = new HashSet<String>();
+			for(Activity activity : activities) {
+				userIds.add(activity.getUserId());
+			}
+			
+			List<User> users = new ArrayList<User>();
+			for(String id : userIds) {
+				try {
+					User user = userApi.find(Long.parseLong(id));
+					users.add(user);
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (cropcert.user.ApiException e) {
+					e.printStackTrace();
+				}
 			}
 			pageInfo.put("users", users);
 			return Response.ok().entity(pageInfo).build();

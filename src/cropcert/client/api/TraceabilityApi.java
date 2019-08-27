@@ -20,15 +20,10 @@ import com.google.inject.Inject;
 
 import cropcert.client.service.TraceabilityService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 @Path("traceability")
 @Api("Traceability")
-@ApiImplicitParams({
-    @ApiImplicitParam(name = "Authorization", value = "Authorization token", 
-                      required = true, dataType = "string", paramType = "header") })
 public class TraceabilityApi {
 	
 	@Inject
