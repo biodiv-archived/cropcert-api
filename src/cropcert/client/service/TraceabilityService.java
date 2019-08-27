@@ -17,7 +17,6 @@ import cropcert.client.util.Utility;
 import cropcert.traceability.ApiException;
 import cropcert.traceability.api.ActivityApi;
 import cropcert.traceability.api.LotApi;
-import cropcert.traceability.api.LotCreationApi;
 import cropcert.traceability.model.Activity;
 import cropcert.traceability.model.Lot;
 import cropcert.user.api.CollectionCenterApi;
@@ -27,8 +26,6 @@ import cropcert.user.model.User;
 public class TraceabilityService {
 	
 	@Inject private CollectionCenterApi collectionCenterApi;
-	
-	@Inject private LotCreationApi lotCreationApi;
 	
 	@Inject private LotApi lotApi;
 	
@@ -40,8 +37,8 @@ public class TraceabilityService {
 		if(lotId != -1 ) {
 			List<Long> ccCodes;
 			try {
-				lotCreationApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
-				ccCodes = lotCreationApi.getLotOrigins(lotId.toString());
+				lotApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
+				ccCodes = lotApi.getLotOrigins(lotId.toString());
 			} catch (ApiException e) {
 				e.printStackTrace();
 				return Response.status(Status.NO_CONTENT).build();

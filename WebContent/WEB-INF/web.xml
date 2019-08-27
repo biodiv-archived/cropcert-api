@@ -9,22 +9,6 @@
 	</welcome-file-list>
 
 	<filter>
-		<filter-name>Auth</filter-name>
-		<filter-class>cropcert.client.filter.JWTTokenValidationFilter</filter-class>
-		<init-param>
-			<param-name>excludedUrls</param-name>
-			<param-value>
-			/api/swagger.json, /index.html, /swagger-ui, 
-			/user/api/, /traceabilty/api/, pages/api
-			</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>Auth</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
-	<filter>
 		<filter-name>RedirectFilter</filter-name>
 		<filter-class>cropcert.client.filter.RedirectFilter</filter-class>
 	</filter>
