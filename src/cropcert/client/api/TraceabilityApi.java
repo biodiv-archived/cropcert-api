@@ -10,7 +10,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -36,8 +35,7 @@ public class TraceabilityApi {
 	@ApiOperation(value = "Get the origin by lot id", response = Map.class)
 	public Response getOrigins(@Context HttpServletRequest request, @DefaultValue("-1") @QueryParam("lotId") Long lotId)
 			throws JSONException {
-		String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-		return traceabilityService.getOrigins(lotId, bearerToken);
+		return traceabilityService.getOrigins(request, lotId);
 	}
 
 	@GET
@@ -47,7 +45,6 @@ public class TraceabilityApi {
 	@ApiOperation(value = "Get the information of the show page for lot", response = Map.class)
 	public Response getShowPage(@Context HttpServletRequest request,
 			@DefaultValue("-1") @QueryParam("lotId") Long lotId) throws JSONException {
-		String bearerToken = request.getHeader(HttpHeaders.AUTHORIZATION);
-		return traceabilityService.getShowPage(lotId, bearerToken);
+		return traceabilityService.getShowPage(request, lotId);
 	}
 }

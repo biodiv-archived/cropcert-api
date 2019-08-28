@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.ws.rs.core.HttpHeaders;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -16,7 +16,9 @@ import com.google.inject.Inject;
 import cropcert.client.util.Utility;
 import cropcert.traceability.ApiException;
 import cropcert.traceability.api.ActivityApi;
+import cropcert.traceability.api.CuppingApi;
 import cropcert.traceability.api.LotApi;
+import cropcert.traceability.api.QualityReportApi;
 import cropcert.traceability.model.Activity;
 import cropcert.traceability.model.Lot;
 import cropcert.user.api.CollectionCenterApi;
@@ -33,11 +35,14 @@ public class TraceabilityService {
 	
 	@Inject private UserApi userApi;
 	
-	public Response getOrigins(Long lotId, String bearerToken) {
+	@Inject private CuppingApi cuppingApi;
+	
+	@Inject private QualityReportApi qualityReportApi;
+	
+	public Response getOrigins(HttpServletRequest request, Long lotId) {
 		if(lotId != -1 ) {
 			List<Long> ccCodes;
 			try {
-				lotApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
 				ccCodes = lotApi.getLotOrigins(lotId.toString());
 			} catch (ApiException e) {
 				e.printStackTrace();
@@ -51,7 +56,6 @@ public class TraceabilityService {
 			
 			Map<String, Object> result;
 			try {
-				collectionCenterApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
 				result = collectionCenterApi.getOriginNames(ccCodesString);
 				return Response.ok().entity(result).build();
 			} catch (cropcert.user.ApiException e) {
@@ -61,10 +65,9 @@ public class TraceabilityService {
 		return Response.status(Status.NO_CONTENT).build();
 	}
 
-	public Response getShowPage(Long lotId, String bearerToken) {
+	public Response getShowPage(HttpServletRequest request, Long lotId) {
 		Map<String, Object> pageInfo = new HashMap<String, Object>();
 		try {
-			lotApi.getApiClient().addDefaultHeader(HttpHeaders.AUTHORIZATION, bearerToken);
 			Lot lot = lotApi.find(lotId);
 			pageInfo.put("lot", lot);
 			List<Activity> activities = activityApi.getByLotId(lotId, -1, -1);
@@ -86,6 +89,8 @@ public class TraceabilityService {
 				}
 			}
 			pageInfo.put("users", users);
+			pageInfo.put("cupping_report", cuppingApi.getByLotId(lotId, null, null));
+			pageInfo.put("quality_report", qualityReportApi.getByLotId(lotId, null, null));
 			return Response.ok().entity(pageInfo).build();
 		} catch (ApiException e) {
 			e.printStackTrace();
