@@ -6,7 +6,7 @@
   "artifactId": "cropcert-api-client",
   "artifactVersion": "1.0.0-SNAPSHOT",
   "fullJavaUtil": true,
-  "dateLibrary": "java8",
+  "dateLibrary": "legacy",
   "library": "jersey1",
   "developerName": "Vilay Kandi",
   "developerEmail": "vilayk@strandls.com",
