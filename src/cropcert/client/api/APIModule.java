@@ -8,6 +8,5 @@ public class APIModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(TraceabilityApi.class).in(Scopes.SINGLETON);
-		bind(UserApi.class).in(Scopes.SINGLETON);
 	}
 }

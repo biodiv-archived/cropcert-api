@@ -8,6 +8,5 @@ public class ServiceModule extends AbstractModule {
 	@Override
 	protected void configure() {
 		bind(TraceabilityService.class).in(Scopes.SINGLETON);
-		bind(UserService.class).in(Scopes.SINGLETON);
 	}
 }
