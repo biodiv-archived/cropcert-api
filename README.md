@@ -2,7 +2,7 @@
 
 API for Cropcert
 
-[![Build Status](https://travis-ci.com/strandls/cropcert-api.svg?branch=master)](https://travis-ci.com/strandls/cropcert-api)
+![Build + SDK](https://github.com/strandls/cropcert-api/workflows/Build%20+%20SDK/badge.svg?branch=master)
 
 ## 🚀 Quick start
 
