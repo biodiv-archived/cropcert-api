@@ -17,3 +17,4 @@ out/
 .java-version
 .vscode
 deployOnVenus.sh
+@ci/maven-toolbox
