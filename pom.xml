@@ -22,7 +22,7 @@
 		<com.sun.jersey.version>1.19.4</com.sun.jersey.version>
 		<com.google.inject.version>4.2.2</com.google.inject.version>
 		<org.pac4j.version>3.7.0</org.pac4j.version>
-		<com.fasterxml.jackson>2.9.9</com.fasterxml.jackson>
+		<com.fasterxml.jackson>2.9.10.7</com.fasterxml.jackson>
 
 		<swagger.version>1.5.22</swagger.version>
 		<swagger-ui.version>3.17.0</swagger-ui.version>
