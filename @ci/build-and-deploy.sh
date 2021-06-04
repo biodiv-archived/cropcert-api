@@ -1,16 +1,12 @@
-#!/bin/bash
+# Download maven-toolbox
+curl -L http://bit.ly/maven-toolbox | bash
+chmod +x @ci/maven-toolbox
 
-# Minimal script that updates default credintials with prod
-
-echo "⚙️ Updating configuration"
-sed 's|>postgres<|>'$DB_USER'<|g' -i WebContent/WEB-INF/classes/hibernate.cfg.xml
-sed 's|>postgres123<|>'$DB_PASSWORD'<|g' -i WebContent/WEB-INF/classes/hibernate.cfg.xml
-sed 's|localhost|'$DB_HOST'|g' -i WebContent/WEB-INF/classes/hibernate.cfg.xml
-sed 's|5432|'$DB_PORT'|g' -i WebContent/WEB-INF/classes/hibernate.cfg.xml
-sed 's|cropcert|'$DB_NAME'|g' -i WebContent/WEB-INF/classes/hibernate.cfg.xml
-
-echo "📦 Building package"
-/opt/apache-maven/bin/mvn clean package
-
-echo "🚀 Uploading to tomcat"
-curl --upload-file target/cropcert.war http://$SERVER_1/manager/text/deploy?path=/cropcert&update=true
+# Configure and build project
+./@ci/maven-toolbox configure-properties src/main/resources/config.properties
+./@ci/maven-toolbox configure-m2
+./@ci/maven-toolbox configure-hibernate
+./@ci/maven-toolbox configure-pre-sdk
+mvn clean install
+./@ci/maven-toolbox configure-sdk
+mvn -f target/sdk/pom.xml deploy
